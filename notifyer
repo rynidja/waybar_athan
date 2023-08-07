@@ -54,5 +54,5 @@ if [ "$status" -gt "$old_status" ]; then
   esac
 fi
 
-echo "$status" > "$STATUS_PATH"
+echo "$name:$status" > "$STATUS_PATH"
 echo "$prayer"
