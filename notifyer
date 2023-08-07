@@ -1,0 +1,43 @@
+#!/bin/sh
+
+STATUS_PATH="/tmp/waybar_athan.status"
+
+
+prayer=$(~/.cargo/bin/waybar_athan -l 36.54 -L 3.95 -v)
+class=$(echo "$prayer" | tail -n 1)
+text=$(echo "$prayer"| head -n 1)
+
+case "$class" in
+  remaining)
+    status=0
+    ;;
+  before)
+    status=1
+    ;;
+  athan)
+    status=2
+    ;;
+  past)
+    status=3
+    ;;
+esac
+
+if ! [ -f "$STATUS_PATH" ]; then
+  echo "$status" > "$STATUS_PATH"
+fi
+
+old_status=$(cat "$STATUS_PATH")
+
+if [ "$status" -gt "$old_status" ]; then
+  case "$status" in
+    1)
+      notify-send -u normal -a "Athan Notify" -i "compass" "Athan" "$text"
+      ;;
+    2)
+      notify-send -u critical -a "Athan Notify" -i "compass" "Athan" "$text"
+      ;;
+  esac
+fi
+
+echo "$status" > "$STATUS_PATH"
+echo "$prayer"

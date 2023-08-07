@@ -31,7 +31,7 @@ fn format_time(duration: Duration) -> String {
     )
 }
 
-pub fn gen_output(prayers: PrayerTimes, standalone: bool) -> String {
+pub fn gen_output(prayers: PrayerTimes, i3blocks_style: bool) -> String {
     let text: String;
     let tooltip: String;
     let class: TimeStatus;
@@ -46,7 +46,7 @@ pub fn gen_output(prayers: PrayerTimes, standalone: bool) -> String {
             class = TimeStatus::Athan;
         } else {
             text = format!("{} -{}", next.name(), format_time(rem));
-            tooltip = format!("{} +{}", curr.name(), format_time(past));
+            tooltip = format!("{} at {}", next.name(), prayers.time(next).with_timezone(&Local).format("%H:%M"));
             if rem.num_minutes() <= 10 {
                 class = TimeStatus::Before;
             } else {
@@ -59,11 +59,11 @@ pub fn gen_output(prayers: PrayerTimes, standalone: bool) -> String {
         class = TimeStatus::Athan;
     } else {
         text = format!("{} +{}", curr.name(), format_time(past));
-        tooltip = format!("{} -{}", next.name(), format_time(rem));
+        tooltip = format!("{} at {}", curr.name(), prayers.time(curr).with_timezone(&Local).format("%H:%M"));
         class = TimeStatus::Past;
     }
 
-    if standalone {
+    if i3blocks_style {
         format!("{}\n{}\n{}", text, tooltip, String::from(class))
     } else {
         format!(

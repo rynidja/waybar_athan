@@ -19,9 +19,9 @@ struct Args {
     #[arg(short = 'M', long, value_enum, default_value_t = MadhabArg::Shafi)]
     madhab: MadhabArg,
 
-    /// Print the output in separate lines format, otherwise waybar json format
-    #[arg(short, long)]
-    standalone: bool,
+    /// Print the output in i3blocks style, otherwise json 
+    #[arg(short = 'v', long)]
+    i3blocks: bool,
 }
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, ValueEnum)]
@@ -103,7 +103,7 @@ pub fn parse() -> (PrayerTimes, bool) {
             .for_location(city)
             .with_configuration(params)
             .calculate()
-            .expect("Err: somthing is wrong in the config"),
-        args.standalone,
+            .unwrap(),
+        args.i3blocks,
     )
 }

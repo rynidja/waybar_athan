@@ -6,7 +6,7 @@ use utils::format::gen_output;
 mod utils;
 
 fn main() {
-    let (prayers, standalone) = utils::args::parse();
+    let (prayers, i3blocks_style) = utils::args::parse();
 
-    println!("{}", gen_output(prayers, standalone));
+    println!("{}", gen_output(prayers, i3blocks_style));
 }
