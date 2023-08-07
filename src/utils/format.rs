@@ -39,7 +39,7 @@ pub fn gen_output(prayers: PrayerTimes, i3blocks_style: bool) -> String {
     let (curr, past) = current_prayer(prayers);
     let (next, rem) = next_prayer(prayers);
 
-    if rem < (past / 2) {
+    if rem < (past * 2) {
         if rem.num_minutes() == 0 {
             text = next.name();
             tooltip = format!("Time for {}", text);
