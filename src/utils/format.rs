@@ -1,5 +1,7 @@
+use chrono::Duration;
+use islam::salah::PrayerTimes;
+
 use crate::utils::prayer_times::*;
-use salah::prelude::*;
 
 enum TimeStatus {
     Remaining,
@@ -39,14 +41,17 @@ pub fn gen_output(prayers: PrayerTimes, i3blocks_style: bool) -> String {
     let (curr, past) = current_prayer(prayers);
     let (next, rem) = next_prayer(prayers);
 
+    let next_name = next.name().unwrap();
+    let curr_name = curr.name().unwrap();
+
     if rem < (past * 2) {
         if rem.num_minutes() == 0 {
-            text = next.name();
+            text = next_name;
             tooltip = format!("Time for {}", text);
             class = TimeStatus::Athan;
         } else {
-            text = format!("{} -{}", next.name(), format_time(rem));
-            tooltip = format!("{} at {}", next.name(), prayers.time(next).with_timezone(&Local).format("%H:%M"));
+            text = format!("{} -{}", next_name, format_time(rem));
+            tooltip = format!("{} at {}", next_name, prayers.time(next).format("%H:%M"));
             if rem.num_minutes() <= 10 {
                 class = TimeStatus::Before;
             } else {
@@ -54,12 +59,12 @@ pub fn gen_output(prayers: PrayerTimes, i3blocks_style: bool) -> String {
             }
         }
     } else if past.num_minutes() == 0 {
-        text = curr.name();
+        text = curr_name;
         tooltip = format!("Time for {}", text);
         class = TimeStatus::Athan;
     } else {
-        text = format!("{} +{}", curr.name(), format_time(past));
-        tooltip = format!("{} at {}", curr.name(), prayers.time(curr).with_timezone(&Local).format("%H:%M"));
+        text = format!("{} +{}", curr_name, format_time(past));
+        tooltip = format!("{} at {}", curr_name, prayers.time(curr).format("%H:%M"));
         class = TimeStatus::Past;
     }
 

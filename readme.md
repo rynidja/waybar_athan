@@ -28,7 +28,6 @@ To get notifications use a wrapper shell script like the one in `notifiyer`
 Todo
 ----
 
-- Add `other` calculation method
 - Add athan time adjustments ...
 
 Bugs Tracking

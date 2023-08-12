@@ -1,16 +1,16 @@
 use clap::{Parser, ValueEnum};
-
-use salah::prelude::*;
+use islam::salah::{Config, Location, Madhab, Method, PrayerSchedule, PrayerTimes};
+use chrono::Local;
 
 // that's it for now :(
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 struct Args {
     #[arg(short, long)]
-    latitude: f64,
+    latitude: f32,
 
     #[arg(short = 'L', long)]
-    longitude: f64,
+    longitude: f32,
 
     /// Prayer time calculion method
     #[arg(short, long, value_enum, default_value_t = MethodArg::Mwl)]
@@ -51,22 +51,16 @@ enum MethodArg {
     Kara,
     /// UmmAlQura
     Uaq,
-    /// Dubai
-    Du,
-    /// MoonsightingCommittee
-    Mc,
     /// NorthAmerica
     Na,
-    /// Kuwait
-    Kw,
-    /// Qatar
-    Qa,
     /// Singapore
     Sg,
-    /// Tehran
-    T,
-    /// Turkey
-    Tr,
+    /// French Muslims
+    Fr,
+    /// Spiritual Administration of Muslims of Russia
+    Rus,
+    /// Fixed Ishaa Time Interval, 90min
+    Fi,
 }
 
 impl From<MethodArg> for Method {
@@ -76,14 +70,11 @@ impl From<MethodArg> for Method {
             MethodArg::Egy => Method::Egyptian,
             MethodArg::Kara => Method::Karachi,
             MethodArg::Uaq => Method::UmmAlQura,
-            MethodArg::Du => Method::Dubai,
-            MethodArg::Mc => Method::MoonsightingCommittee,
             MethodArg::Na => Method::NorthAmerica,
-            MethodArg::Kw => Method::Kuwait,
-            MethodArg::Qa => Method::Qatar,
             MethodArg::Sg => Method::Singapore,
-            MethodArg::T => Method::Tehran,
-            MethodArg::Tr => Method::Turkey,
+            MethodArg::Fr => Method::French,
+            MethodArg::Rus => Method::Russia,
+            MethodArg::Fi => Method::FixedInterval,
         }
     }
 }
@@ -93,15 +84,15 @@ pub fn parse() -> (PrayerTimes, bool) {
 
     let method: Method = args.method.into();
     let madhab: Madhab = args.madhab.into();
-    let city = Coordinates::new(args.latitude, args.longitude);
-    let today = Utc::now().date();
-    let params = Configuration::with(method, madhab);
+    let location = Location::new(args.latitude, args.longitude);
+    let today = Local::now().date_naive();
+    let params = Config::new().with(method, madhab);
 
     (
-        PrayerSchedule::new()
+        PrayerSchedule::new(location)
+            .unwrap()
             .on(today)
-            .for_location(city)
-            .with_configuration(params)
+            .with_config(params)
             .calculate()
             .unwrap(),
         args.i3blocks,
