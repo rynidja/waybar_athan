@@ -11,6 +11,9 @@ islam = "2"
 chrono = "0.4.26"
 clap = { version = "4.3.19", features = ["derive"] }
 
+[patch.crates-io]
+islam = { git = "https://github.com/rynidja/islam" }
+
 [profile.release]
 opt-level = 3
 lto = true

@@ -1,7 +1,3 @@
-/* TODO:
-*   notification
-* */
-
 use utils::format::gen_output;
 mod utils;
 

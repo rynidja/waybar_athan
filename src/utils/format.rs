@@ -5,7 +5,7 @@ use crate::utils::prayer_times::*;
 
 enum TimeStatus {
     Remaining,
-    Before, // wudu ...
+    Before, 
     Athan,
     Past,
 }
@@ -25,12 +25,7 @@ fn format_time(duration: Duration) -> String {
     let hours = duration.num_hours() as u32;
     let minutes = (duration.num_minutes() % 60) as u32;
 
-    format!(
-        "{}:{}{}",
-        hours,
-        if minutes <= 9 { "0" } else { "" },
-        minutes
-    )
+    format!("{}:{:02}", hours, minutes)
 }
 
 pub fn gen_output(prayers: PrayerTimes, i3blocks_style: bool) -> String {
@@ -38,11 +33,8 @@ pub fn gen_output(prayers: PrayerTimes, i3blocks_style: bool) -> String {
     let tooltip: String;
     let class: TimeStatus;
 
-    let (curr, past) = current_prayer(prayers);
-    let (next, rem) = next_prayer(prayers);
-
-    let next_name = next.name().unwrap();
-    let curr_name = curr.name().unwrap();
+    let (curr_name, curr_time, past) = current_prayer(prayers);
+    let (next_name, next_time, rem) = next_prayer(prayers);
 
     if rem < (past * 2) {
         if rem.num_minutes() == 0 {
@@ -51,7 +43,7 @@ pub fn gen_output(prayers: PrayerTimes, i3blocks_style: bool) -> String {
             class = TimeStatus::Athan;
         } else {
             text = format!("{} -{}", next_name, format_time(rem));
-            tooltip = format!("{} at {}", next_name, prayers.time(next).format("%H:%M"));
+            tooltip = format!("{} at {}", next_name, next_time.format("%H:%M"));
             if rem.num_minutes() <= 10 {
                 class = TimeStatus::Before;
             } else {
@@ -64,7 +56,7 @@ pub fn gen_output(prayers: PrayerTimes, i3blocks_style: bool) -> String {
         class = TimeStatus::Athan;
     } else {
         text = format!("{} +{}", curr_name, format_time(past));
-        tooltip = format!("{} at {}", curr_name, prayers.time(curr).format("%H:%M"));
+        tooltip = format!("{} at {}", curr_name, curr_time.format("%H:%M"));
         class = TimeStatus::Past;
     }
 
