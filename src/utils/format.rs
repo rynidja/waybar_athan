@@ -5,7 +5,7 @@ use crate::utils::prayer_times::*;
 
 enum TimeStatus {
     Remaining,
-    Before, 
+    Before,
     Athan,
     Past,
 }

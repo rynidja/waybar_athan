@@ -1,6 +1,6 @@
+use chrono::Local;
 use clap::{Parser, ValueEnum};
 use islam::salah::{Config, Location, Madhab, Method, PrayerSchedule, PrayerTimes};
-use chrono::Local;
 
 // that's it for now :(
 #[derive(Parser, Debug)]
@@ -19,7 +19,7 @@ struct Args {
     #[arg(short = 'M', long, value_enum, default_value_t = MadhabArg::Shafi)]
     madhab: MadhabArg,
 
-    /// Print the output in i3blocks style, otherwise json 
+    /// Print the output in i3blocks style, otherwise json
     #[arg(short = 'v', long)]
     i3blocks: bool,
 }
@@ -92,6 +92,7 @@ pub fn parse() -> (PrayerTimes, bool) {
         PrayerSchedule::new(location)
             .unwrap()
             .on(today)
+            .unwrap()
             .with_config(params)
             .calculate()
             .unwrap(),

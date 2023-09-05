@@ -101,9 +101,9 @@ checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 
 [[package]]
 name = "chrono"
-version = "0.4.26"
+version = "0.4.28"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ec837a71355b28f6556dbd569b37b3f363091c0bd4b2e735674521b4c5fd9bc5"
+checksum = "95ed24df0632f708f5f6d8082675bef2596f7084dee3dd55f632290bf35bfe0f"
 dependencies = [
  "android-tzdata",
  "iana-time-zone",
@@ -111,7 +111,7 @@ dependencies = [
  "num-traits",
  "time",
  "wasm-bindgen",
- "winapi",
+ "windows-targets",
 ]
 
 [[package]]
@@ -236,8 +236,9 @@ dependencies = [
 
 [[package]]
 name = "islam"
-version = "2.0.0"
-source = "git+https://github.com/rynidja/islam#2686930db3f3e1d89319e4f4ba7f06822d597610"
+version = "3.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ea397def01a3ef4965521f76e6a8ce8e84e8f6b027da0aa7662ebfdd6913bb9f"
 dependencies = [
  "chrono",
  "thiserror",
@@ -335,18 +336,18 @@ dependencies = [
 
 [[package]]
 name = "thiserror"
-version = "1.0.47"
+version = "1.0.48"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "97a802ec30afc17eee47b2855fc72e0c4cd62be9b4efe6591edde0ec5bd68d8f"
+checksum = "9d6d7a740b8a666a7e828dd00da9c0dc290dff53154ea77ac109281de90589b7"
 dependencies = [
  "thiserror-impl",
 ]
 
 [[package]]
 name = "thiserror-impl"
-version = "1.0.47"
+version = "1.0.48"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6bb623b56e39ab7dcd4b1b98bb6c8f8d907ed255b18de254088016b27a8ee19b"
+checksum = "49922ecae66cc8a249b77e68d1d0623c1b2c514f0060c27cdc68bd62a1219d35"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -438,7 +439,7 @@ checksum = "ca6ad05a4870b2bf5fe995117d3728437bd27d7cd5f06f13c17443ef369775a1"
 
 [[package]]
 name = "waybar_athan"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "chrono",
  "clap",

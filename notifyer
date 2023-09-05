@@ -2,9 +2,9 @@
 
 # make sure the widget is
 # "custom/athan": {
-# "format": "󱠧  {}",
-# "exec": "<Path to this file> <latitude> <Longitude>",
-# "interval": 60,
+#   "format": "󱠧  {}",
+#   "exec": "<Path to this file> <latitude> <Longitude>",
+#   "interval": 60,
 # }
 
 STATUS_PATH="$XDG_RUNTIME_DIR/waybar_athan.status"

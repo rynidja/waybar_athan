@@ -1,18 +1,19 @@
 [package]
 name = "waybar_athan"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-islam = "2"
+islam = "3.2"
 chrono = "0.4.26"
 clap = { version = "4.3.19", features = ["derive"] }
 
 [patch.crates-io]
-islam = { git = "https://github.com/rynidja/islam" }
+# islam = { git = "https://github.com/rynidja/islam" }
+# islam = { git = "https://github.com/azzamsa/islam", branch = "patch"}
 
 [profile.release]
 opt-level = 3
